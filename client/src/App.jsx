@@ -11,6 +11,8 @@ import StudentLayout from './layout/StudentLayout';
 import RequireAuth from './components/RequireAuth';
 import useAuth from './hooks/useAuth';
 
+//todo : lazy load pages suspense
+
 const ROLES = { 
   STUDENT : "students",
   ADMIN : "admins",

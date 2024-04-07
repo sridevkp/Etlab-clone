@@ -622,10 +622,6 @@ body {
   }
 }
 
-.m-0 {
-  margin: 0px;
-}
-
 .my-7 {
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -637,6 +633,18 @@ body {
 
 .mr-auto {
   margin-right: auto;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -671,8 +679,28 @@ body {
   width: 100vw;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-1 {
+  width: 0.25rem;
+}
+
+.min-w-20 {
+  min-width: 5rem;
+}
+
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-20 {
+  max-width: 5rem;
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -691,8 +719,16 @@ body {
   justify-content: space-between;
 }
 
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.rounded {
+  border-radius: 0.25rem;
 }
 
 .rounded-md {
@@ -715,13 +751,13 @@ body {
   background-color: hsl(var(--destructive));
 }
 
-.bg-primary {
-  background-color: hsl(var(--primary));
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
-.bg-red-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(252 165 165 / var(--tw-bg-opacity));
+.bg-primary {
+  background-color: hsl(var(--primary));
 }
 
 .bg-red-400 {
@@ -738,9 +774,13 @@ body {
   background-color: hsl(var(--secondary));
 }
 
-.bg-red-700 {
+.bg-red-200 {
   --tw-bg-opacity: 1;
-  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+}
+
+.bg-opacity-10 {
+  --tw-bg-opacity: 0.1;
 }
 
 .p-5 {
@@ -750,6 +790,11 @@ body {
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-3 {
@@ -767,9 +812,22 @@ body {
   padding-right: 2rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-end {
+  text-align: end;
 }
 
 .text-2xl {
@@ -830,6 +888,17 @@ body {
 
 .opacity-70 {
   opacity: 0.7;
+}
+
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-slate-50 {
+  --tw-shadow-color: #f8fafc;
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .outline {

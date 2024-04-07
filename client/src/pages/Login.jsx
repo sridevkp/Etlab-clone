@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import axios from "../api/axios"
 
 function Login() {
   const [username,setUsername] = useState("")
@@ -20,34 +21,25 @@ function Login() {
       e.preventDefault()
       
       try{
-        const URL = "http://localhost:8080/login"
-        const response = await fetch( URL, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: "POST",
-          body: JSON.stringify({ username, pwd })
+        const response = await axios.post( "/auth", 
+                            JSON.stringify({ username, pwd }),
+                            {
+                              headers : { "Content-Type": "application/json" },
+                              withCredentials : true
+                            }
+                          )
+        setAuth({
+          user : {
+            id   : response.data.id,
+            name : response.data.username,
+            role : response.data.role
+          } ,
+          token : response.data.token
         })
-        
-        if( response.ok ){
-          const data = await response.json() 
-          
-          setAuth({
-            user : {
-              name : data.username,
-              role : data.role
-            } ,
-            token : data.token
-          })
-          // location.state?.from?.pathname ||
-          navigate( data.redirect, { replace: true } )
-        }else{
-          setErr( response.status == 404 ? "username" : "pwd" )
-        }
-
+        navigate( response.data.redirect, { replace: true } )
+      
       }catch( err ){
-        console.log(err)
+        if( err.response ) setErr( err.response.status == 404 ? "username" : "pwd" ) ;
       }
 
   }
