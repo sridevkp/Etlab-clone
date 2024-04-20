@@ -1,15 +1,24 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import LandingLayout from "./layout/LandingLayout"
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
+
+import AdminLayout from './layout/AdminLayout';
+import StudentLayout from './layout/StudentLayout';
+import LandingLayout from "./layout/LandingLayout";
+
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
+import Results from './pages/Results';
+import Inbox from './pages/Inbox';
 import Login from './pages/Login';
+import Fee from './pages/Fee';
+import Leaves from './pages/Leaves';
 import FilenotFound from './pages/FilenotFound';
 import Register from './pages/Register';
 import UnAuthorized from './pages/UnAuthorized';
-import AdminLayout from './layout/AdminLayout';
-import StudentLayout from './layout/StudentLayout';
+import Profile from './pages/Profile';
+
 import RequireAuth from './components/RequireAuth';
-import useAuth from './hooks/useAuth';
+import PersistLogin from './components/PersistLogin';
 
 //todo : lazy load pages suspense
 
@@ -20,9 +29,10 @@ const ROLES = {
 }
 
 function App() {
+  const location = useLocation()
 
   return (
-    <Routes>
+    <Routes location={location} key={location.pathname}>
       <Route path='/' element={<LandingLayout/>} >
           <Route index element={<HomeNavigator/>} />
           <Route path='login' element={<Login/>} />
@@ -30,16 +40,24 @@ function App() {
           <Route path='unauthorized' element={<UnAuthorized/>} />
       </Route>
       
-      <Route element={<RequireAuth roles={[ ROLES.STUDENT ]}/>}>
-        <Route path="/students" element={<StudentLayout/>} >
-            <Route path='dashboard' element={<Dashboard/>} />
-            <Route path='attendance' element={<Attendance/>} />
+      <Route element={<PersistLogin/>}>
+        <Route element={<RequireAuth roles={[ ROLES.STUDENT ]}/>}>
+          <Route path="/students" element={<StudentLayout/>} >
+              <Route path='dashboard' element={<Dashboard/>} />
+              <Route path='profile' element={<Profile/>} />
+              <Route path='attendance' element={<Attendance/>} />
+              <Route path='results' element={<Results/>} />
+              <Route path='inbox' element={<Inbox/>} />
+              <Route path='dues' element={<Fee/>} />
+              <Route path='leaves' element={<Leaves/>} />
+          </Route>
         </Route>
-      </Route>
-        
-      <Route element={<RequireAuth roles={[ ROLES.ADMIN ]}/>}>
-        <Route path="/admins" element={<AdminLayout/>}>
-            <Route path='dashboard' element={<Dashboard/>} />
+          
+        <Route element={<RequireAuth roles={[ ROLES.ADMIN ]}/>}>
+          <Route path="/admins" element={<AdminLayout/>}>
+              <Route path='dashboard' element={<Dashboard/>} />
+              <Route path='profile' element={<Profile/>} />
+          </Route>
         </Route>
       </Route>
       
@@ -53,8 +71,8 @@ function App() {
 function HomeNavigator() {
   const { auth } = useAuth()
   return (
-    auth?.user
-      ?<Navigate to={`/${auth.user.role}/dashboard`} />
+    auth?.role
+      ?<Navigate to={`/${auth.role}/dashboard`} />
       :<Navigate to="/login"/>
   )
 }

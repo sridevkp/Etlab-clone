@@ -1,7 +1,12 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs')
-const SALT = Number(process.env.SALT) || 10
+const mongoose = require("mongoose")
 
+mongoose.connect('mongodb://localhost:27017/etlabs')
+const { userModel: Users } = require("./../models/User")
+
+
+const SALT = Number(process.env.SALT) || 10
 var refreshTokens = []
 
 ROLES = { 
@@ -10,7 +15,7 @@ ROLES = {
     PARENT: "parents"
 }
 
-const users = require("../views/user.json").users
+// const users = require("../models/user.json").users
 
 const authUser = ( req, res, next ) => {
     const authHeader = req.headers["authorization"]
@@ -24,22 +29,20 @@ const authUser = ( req, res, next ) => {
     })
 }
 
-const handleLogin =  ( req, res ) => {
+const handleLogin =  async ( req, res ) => {
     const username = req.body.username
-    const usersList = Object.values(users)
-    const finding = usersList.find( user => user.username.toLowerCase() == username.toLowerCase() ) 
+    const finding = await Users.findOne({ username }) 
     
     if( finding ){
         const pwd = req.body.pwd
         if( bcrypt.compareSync( pwd, finding.pwd) ){
-            
             const username = finding.username
             const role = finding.role
-            const id = finding.id
+            const id = finding._id
             const message = "Login successfull"
             const redirect = `/${role}/dashboard`
-            const token = generateToken({ username, id })
-            const refreshToken = jwt.sign( {username, id }, process.env.REFRESH_TOKEN_SECRET )
+            const token = generateToken({ username, id, role })
+            const refreshToken = jwt.sign( { username, id, role }, process.env.REFRESH_TOKEN_SECRET )
 
             res.status(200)
             .cookie( "rft", refreshToken, { 
@@ -87,8 +90,14 @@ const refreshToken = ( req, res ) => {
     if( refreshTokens.includes( refreshToken )){
         return jwt.verify( refreshToken, process.env.REFRESH_TOKEN_SECRET, ( err, user ) => {
             if( err ) return res.sendStatus(403);
-            const token = generateToken( { username: user.username, id : user.id } )
-            return res.json({ token })
+
+            const token = generateToken( { 
+                username: user.username, 
+                id : user.id, 
+                role: user.role 
+            } )
+            const { username, id, role } = user
+            return res.json({ username, token, id, role })
         })
     } 
     return res.sendStatus(403)
