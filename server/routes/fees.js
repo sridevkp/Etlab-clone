@@ -1,14 +1,9 @@
 const express = require("express")
 const router = express.Router()
-const mongoose = require("mongoose")
 
-const db=  mongoose.createConnection('mongodb://localhost:27017/etlabs')
+const { createOrder, verifyPayment } = require("../controllers/feeController");
 
-router.get("/reciepts", ( req, res ) => {
-    res.send("No reciepts")
-})
-.get("/pay", ( req, res ) => {
-    res.send("this feature is not available yet")
-})
+router.post( "/order", createOrder )
+router.post( "/verify", verifyPayment )
 
 module.exports = router

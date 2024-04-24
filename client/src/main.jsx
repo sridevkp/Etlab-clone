@@ -16,7 +16,7 @@ root.render(
         <AuthProvider>
           <AnimatePresence>
             <Routes>
-              <Route path='/*' element={<App></App>}></Route>
+              <Route path='/*' element={<App/>}></Route>
             </Routes>
           </AnimatePresence>
         </AuthProvider>

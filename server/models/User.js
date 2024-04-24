@@ -8,6 +8,7 @@ const ROLES = {
 }
 
 const { examSchema: Exam } = require("./Exam")
+const { feeSchema: Fee } = require("./Fee")
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -85,6 +86,13 @@ const userSchema = new mongoose.Schema({
         date: Date,
         subject: String,
         body: String,
+    }],
+    dues: [ Fee ],
+    receipts: [ {
+        date : Date,
+        mode: String,
+        payment_id: String,
+        fee : Fee,
     }]
 })
 

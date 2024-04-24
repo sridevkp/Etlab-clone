@@ -5,9 +5,10 @@ const mongoose = require("mongoose")
 mongoose.connect('mongodb://localhost:27017/etlabs')
 const { userModel: Users } = require("./../models/User")
 
-
-const SALT = Number(process.env.SALT) || 10
-var refreshTokens = []
+const REFRESH_AGE = 24 *60 *60 *1000;
+const ACCESS_AGE = 60;
+const SALT = Number(process.env.SALT) || 10 ;
+var refreshTokens = [];
 
 ROLES = { 
     STUDENT : "students",
@@ -43,13 +44,13 @@ const handleLogin =  async ( req, res ) => {
             const redirect = `/${role}/dashboard`
             const token = generateToken({ username, id, role })
             const refreshToken = jwt.sign( { username, id, role }, process.env.REFRESH_TOKEN_SECRET )
-
+            
             res.status(200)
             .cookie( "rft", refreshToken, { 
                 httpOnly: true, 
                 sameSite : "None",
                 secure : true ,
-                maxAge: 24 *60 *60 *1000
+                maxAge: REFRESH_AGE
             })
             .json({ username, id, role, token, message, redirect }) 
             
@@ -62,7 +63,7 @@ const handleLogin =  async ( req, res ) => {
 }
 
 const generateToken = (user) => {
-    return jwt.sign( user , process.env.ACCESS_TOKEN_SECRET , { expiresIn : "10s" })
+    return jwt.sign( user , process.env.ACCESS_TOKEN_SECRET , { expiresIn : ACCESS_AGE })
 }
 
 const handleLogout = ( req, res ) => {

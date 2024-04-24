@@ -4,8 +4,8 @@ import { Separator } from "@/components/ui/separator"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
+  // CardDescription,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -53,13 +53,13 @@ function Dashboard() {
         <CardContent>
           <ScrollArea className="h-[400px]">
             {
-              Array(15).fill().map(key => 
+              ...Array(15).fill().map( ( key, i ) => 
                 <>
                 <div className="p-4 rounded-md my-2">
                   <p className="font-thin text-sm">20-04-24 :</p>
                   Officiis illo nihil assumenda nobis omnis quisquam magni. Adipisci sapiente dolorum nemo non voluptas minima eveniet. Est porro temporibus doloremque sapiente dolores omnis quam. Cupiditate quibusdam tenetur quo distinctio porro.
                 </div>
-                <Separator />
+                <Separator/>
                 </>
               )
             }

@@ -71,7 +71,7 @@ function Login() {
       // exit={{ opacitsy: 0 }}
       transition={{duration: 0.2, ease:"easeOut"}}
     >
-      <Toaster/>
+      <Toaster className="w-full"/>
       <div className='container p-5 max-w-xs'>
         <form onSubmit={handleSubmit} ref={form}>
 

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
 
 const feeSchema = new mongoose.Schema({
-    for: String,
-    issued_on:{
+    description: String,
+    issuedOn:{
         type: Date,
-        default: () => Date.now(),
+        default: () => new Date(),
     },
     due: {
         type: Date,
@@ -16,5 +16,5 @@ const feeSchema = new mongoose.Schema({
     },
 })
 
-    const feeModel = mongoose.model( "Fee", feeSchema )
+const feeModel = mongoose.model( "Fee", feeSchema )
 module.exports = { feeSchema, feeModel }

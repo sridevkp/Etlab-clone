@@ -16,11 +16,11 @@ app.use( express.json() )
 app.use("/auth", require("./routes/auth.js"))
 
 app.use( authUser )
-    .use("/fees", require("./routes/fees.js"))
     .use("/users", require("./routes/users.js"))
     .use("/students", require("./routes/students.js"))
     .use("/parents" , require("./routes/parents.js") )
-    .use("/admins"   , require("./routes/admin.js")   ) 
+    .use("/admins"   , require("./routes/admin.js")) 
+    .use("/api/fees", require("./routes/fees.js"))
 
 
 

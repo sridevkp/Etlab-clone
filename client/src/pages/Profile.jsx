@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react"
-import useAuth from "../hooks/useAuth"
 import useAxiosPrivate from "../hooks/useAxiosPrivate"
-import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
 function Profile() {
-  const { auth } = useAuth()
   const axiosPrivate = useAxiosPrivate()
   const [ bio, setBio ] = useState()
 
