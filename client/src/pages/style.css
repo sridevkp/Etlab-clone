@@ -1,0 +1,13 @@
+:root{
+  --gradient :  linear-gradient(to bottom right, #ff4646 0%,#ff46da 33%,#6b0909 66%, #fd1892 100%);
+}
+.gradient-box {
+    border: 1px solid transparent;
+    border-image: var(--gradient);
+    border-image-slice: 1;
+  }
+.gradient-text{
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

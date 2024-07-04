@@ -1,16 +1,21 @@
 import { useContext, useRef, useState } from 'react'
-import useAuth from '../hooks/useAuth'
+import { jwtDecode } from 'jwt-decode'
 import { useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Separator } from "@/components/ui/separator"
 
 import axios from "../api/axios"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
-import AuthContext from '../context/AuthProvider'
 import { motion } from "framer-motion"
+
+import GoogleSigninBtn from "../components/GoogleSigninBtn"
+import AuthContext from '../context/AuthProvider'
 
 
 
@@ -19,38 +24,37 @@ function Login() {
   const [ name, setName ] = useState("")
   const [ password, setPassword ] = useState("")
   const [ err, setErr ] = useState(null)
-  const {toast} = useToast()
-  // const [showPwd, setShowPwd] = useState(false);
+  const { toast } = useToast()
 
   const form = useRef()
-  const { setAuth } = useAuth()
+  const { auth, setAuth } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
   const handleSubmit = async e => {
       e.preventDefault()
 
-      let username = name.trim()
+      let email = name.trim()
       let pwd = password.trim()
 
-      if( !username ) return toast({ title: "Enter username", variant: "destructive" })
+      if( !email ) return toast({ title: "Enter email", variant: "destructive" })
       if( !pwd ) return toast({ title: "Enter password", variant: "destructive" })
       
       try{
         const response = await axios.post( "/auth", 
-                            JSON.stringify({ username, pwd }),
+                            JSON.stringify({ email, pwd }),
                             {
                               headers : { "Content-Type": "application/json" },
                               withCredentials : true
                             }
                           )
-        
+        const accessToken = response.data.accessToken
+        const user = jwtDecode(accessToken)
         setAuth({
-          id   : response.data.id,
-          name : response.data.username,
-          role : response.data.role,
-          token : response.data.token
+          accessToken,
+          user
         })
+
         toast({ title: "Login successfull"} )
         await new Promise(r => setTimeout(r, 1000));
         navigate( response.data.redirect, { replace: true } )
@@ -58,9 +62,26 @@ function Login() {
       }catch( err ){
         console.log( err )
         toast( { title: "Login failed", description: err.message, variant: "destructive" })
-        if( err.response ) setErr( err.response.status == 404 ? "username" : "pwd" ) ;
+        if( err.response ) setErr( err.response.status == 404 ? "email" : "pwd" ) ;
       }
 
+  }
+  
+  const handleCallbackResponse = async response => {
+    const token = response.credential
+
+    try{
+      const response = await axios.post("/auth/google", 
+        JSON.stringify({token}),
+        {
+          headers : { "Content-Type": "application/json" },
+        })
+      // const data = jwtDecode(token)
+      // setAuth(data)
+      console.log(response)
+    }catch( err ){
+      toast( { title: "Login failed", description: err.message, variant: "destructive" })
+    }
   }
 
   return (
@@ -78,9 +99,9 @@ function Login() {
           <h2 className='text-2xl font-bold my-7 opacity-70'>Login</h2>
           
           <div className='flex-col mb-4'>
-            <Label htmlFor="username" className="font-extralight">Username</Label>
-            <Input id="username" placeholder="23cs453" onChange={e=>{ setName(e.target.value)}} />
-            {err == "username" && <p className='text-xs text-red-900'>invalid username</p>}
+            <Label htmlFor="email" className="font-extralight">Email</Label>
+            <Input id="email" placeholder="23cs453@mgits.ac.in" onChange={e=>{ setName(e.target.value)}} />
+            {err == "email" && <p className='text-xs text-red-900'>invalid email</p>}
           </div>
 
           <div className='flex-col mb-4'>
@@ -96,6 +117,13 @@ function Login() {
           <Button type="submit" className="w-full">Submit</Button>
 
         </form>
+
+        <Separator className="my-5 mx-3 w-auto"/>
+        
+        <div className="flex justify-center">
+          <GoogleSigninBtn handleCallbackResponse={handleCallbackResponse}/>
+        </div>
+
       </div>
     </motion.div>
   )

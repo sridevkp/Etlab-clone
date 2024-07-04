@@ -32,7 +32,7 @@ function App() {
   const location = useLocation()
 
   return (
-    <Routes /*location={location} key={location.pathname}*/>
+    <Routes location={location} key={location.pathname}>
       <Route path='/' element={<LandingLayout/>} >
           <Route index element={<HomeNavigator/>} />
           <Route path='login' element={<Login/>} />
@@ -72,7 +72,7 @@ function HomeNavigator() {
   const { auth } = useAuth()
   return (
     auth?.role
-      ?<Navigate to={`/${auth.role}/dashboard`} />
+      ?<Navigate to={`/${auth.user.role}/dashboard`} />
       :<Navigate to="/login"/>
   )
 }

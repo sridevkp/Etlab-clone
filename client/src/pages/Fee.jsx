@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button"
 import useRazorpay from "react-razorpay";
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/components/ui/use-toast"
-import { title } from "process"
 
 function Fee() {
   const axiosPrivate = useAxiosPrivate()
@@ -52,7 +51,7 @@ function Fee() {
         amount : order.amount,
         currency:"INR",
         name: "ETlabs",
-        description: fee.description||fee.discription,
+        description: fee.description,
         order_id : order.id,
         handler: async res => {
           res = {
@@ -88,7 +87,6 @@ function Fee() {
       transition={{duration: 0.2, ease:"easeOut"}}
       className="grid gap-2 p-2"
     >
-      <Toaster/>
       <Card>
       {
         !dues?.length
@@ -118,7 +116,7 @@ function Fee() {
               <TableBody>
                 {dues.map( ( due, i )  => (
                   <TableRow key={i}>
-                    <TableCell className="font-medium">{ due.description||due.discription }</TableCell>
+                    <TableCell className="font-medium">{ due.description }</TableCell>
                     <TableCell>{ new Date(due.issuedOn).toDateString() }</TableCell>
                     <TableCell>{ new Date(due.due).toDateString() }</TableCell>
                     <TableCell className="font-medium">₹ {due.amt}</TableCell>
@@ -162,7 +160,7 @@ function Fee() {
               <TableBody>
                 {receipts.map( ( receipt, i )  => (
                   <TableRow key={i}>
-                    <TableCell className="font-medium">{ receipt.fee.description||receipt.fee.discription }</TableCell>
+                    <TableCell className="font-medium">{ receipt.fee.description }</TableCell>
                     <TableCell>{ new Date(receipt.date).toDateString() }</TableCell>
                     <TableCell>{ receipt.mode }</TableCell>
                     <TableCell className="font-medium">₹ { receipt.fee.amt }</TableCell>
@@ -177,7 +175,7 @@ function Fee() {
         </>
       }
       </Card>
-      
+      <Toaster/>
     </motion.div>
   )
 }

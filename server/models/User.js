@@ -11,7 +11,11 @@ const { examSchema: Exam } = require("./Exam")
 const { feeSchema: Fee } = require("./Fee")
 
 const userSchema = new mongoose.Schema({
-    username: {
+    email: {
+        type: String,
+        required: true,
+    },
+    name: {
         type: String,
         required: true,
     },

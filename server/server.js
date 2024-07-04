@@ -9,7 +9,7 @@ const { authUser } = require("./controllers/authController.js")
 const PORT = process.env.PORT || 8080
 
 app.use( credentials )
-app.use(cors(corsOptions))
+app.use( cors(corsOptions) )
 app.use( cookieParser() )
 app.use( express.json() )
 
@@ -19,7 +19,7 @@ app.use( authUser )
     .use("/users", require("./routes/users.js"))
     .use("/students", require("./routes/students.js"))
     .use("/parents" , require("./routes/parents.js") )
-    .use("/admins"   , require("./routes/admin.js")) 
+    .use("/admins"  , require("./routes/admin.js")) 
     .use("/api/fees", require("./routes/fees.js"))
 
 

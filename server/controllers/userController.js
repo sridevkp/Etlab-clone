@@ -8,7 +8,7 @@ const getBio = async ( req, res ) => {
         const user = await Users.findById( req.user.id )
         const bio = user?.bio 
         if( ! bio ) return res.sendStatus(404);
-        res.status(200).json( { name : user.username, ...bio, role : user.role })
+        res.status(200).json( { name : user.email, ...bio, role : user.role })
     }catch( err ){
         console.log( err )
         res.sendStatus(500)

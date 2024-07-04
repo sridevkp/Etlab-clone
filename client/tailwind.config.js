@@ -75,3 +75,4 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }
+// npx tailwindcss -i ./src/index.css -o ./src/tailwind.css --watch

@@ -20,11 +20,11 @@ function StudentLayout() {
             <UserNav/>
         </header>
         <Separator className="my-3 mx-3 w-auto"/>
-        <main className='grid grid-cols-[0,auto,1fr] sm:grid-cols-[88px,auto,1fr] md:grid-cols-[160px,auto,1fr] auto-rows-auto h-5/6'>
-          <div className='grid auto-rows-min p-5 gap-5 sticky top-0 self-start'>
+        <main className='grid sm:grid-cols-[88px,auto,1fr] md:grid-cols-[160px,auto,1fr] auto-rows-auto h-5/6'>
+          <div className='grid sm:auto-rows-min sm:grid-cols-1 grid-cols-5 p-5 gap-5 sticky top-0 self-start sm:bg-transparent bg-zinc-900 z-10'>
 
-            <Tooltip placement="right" title="Dashboard">
-              <Link to={`/${auth.role}/dashboard`} className="hover:text-slate-300">
+            <Tooltip title="Dashboard">
+              <Link to={`/${auth.user.role}/dashboard`} className="hover:text-slate-300">
                 <div className='flex items-center justify-start gap-4'>
                   <DashboardIcon className='size-6 w-full md:size-5'/>
                   <h3 className="hidden md:inline">Dashboard</h3>
@@ -32,8 +32,8 @@ function StudentLayout() {
               </Link>
             </Tooltip>
 
-            <Tooltip placement="right" title="Attendance">
-              <Link to={`/${auth.role}/attendance`} className="hover:text-slate-300">
+            <Tooltip title="Attendance">
+              <Link to={`/${auth.user.role}/attendance`} className="hover:text-slate-300">
                 <div className='flex items-center justify-start gap-4'>
                   <LiaUserCheckSolid className="size-6 w-full md:size-5"/>
                   <h3 className="hidden md:inline">Attendance</h3>
@@ -41,8 +41,8 @@ function StudentLayout() {
               </Link>
             </Tooltip>
 
-            <Tooltip placement="right" title="Results">
-              <Link to={`/${auth.role}/results`} className="hover:text-slate-300">
+            <Tooltip title="Results">
+              <Link to={`/${auth.user.role}/results`} className="hover:text-slate-300">
                 <div className='flex items-center justify-start gap-4'>
                   <PiExam className="size-6 w-full md:size-5"/>
                   <h3 className="hidden md:inline">Results</h3>
@@ -50,8 +50,8 @@ function StudentLayout() {
               </Link>
             </Tooltip>
 
-            <Tooltip placement="right" title="Dues">
-              <Link to={`/${auth.role}/dues`} className="hover:text-slate-300">
+            <Tooltip title="Dues">
+              <Link to={`/${auth.user.role}/dues`} className="hover:text-slate-300">
                 <div className='flex items-center justify-start gap-4'>
                   <PiMoney className="size-6 w-full md:size-5"/>
                   <h3 className="hidden md:inline">Dues</h3>
@@ -59,8 +59,8 @@ function StudentLayout() {
               </Link>
             </Tooltip>
 
-            <Tooltip placement="right" title="Leaves">
-              <Link to={`/${auth.role}/leaves`} className="hover:text-slate-300">
+            <Tooltip title="Leaves">
+              <Link to={`/${auth.user.role}/leaves`} className="hover:text-slate-300">
                 <div className='flex items-center justify-start gap-4'>
                   <TbCalendarX className="size-6 w-full md:size-5"/>
                   <h3 className="hidden md:inline">Leaves</h3>

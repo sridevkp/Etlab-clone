@@ -9,8 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { DrawingPinFilledIcon } from '@radix-ui/react-icons'
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer , RadialBar, RadialBarChart, Legend} from 'recharts';
+import "./style.css"
 
 const result = [
           { sem: 'S1', sgpa: 7.88 },
@@ -44,11 +46,13 @@ function Dashboard() {
       animate={{ opacity: 1 }}
       // exit={{ opacity: 0 }}
       transition={{duration: 0.2, ease:"easeOut"}}
-      className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 auto-rows-[minmax(120px,auto)] gap-2 px-3"
+      className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 auto-rows-[minmax(120px,auto)] gap-2 p-2"
     >
       <Card className="row-span-3">
         <CardHeader>
-          <CardTitle>Notice</CardTitle>
+          <CardTitle className="flex">
+            Notice <DrawingPinFilledIcon className="text-red-600 size-5"/>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[400px]">
@@ -67,9 +71,9 @@ function Dashboard() {
         </CardContent>
       </Card>
 
-      <Card className="md:col-span-2">
+      <Card className="md:col-span-2 gradient-box">
         <CardHeader>
-          <CardTitle>Vision</CardTitle>
+          <CardTitle className="gradient-text">Vision</CardTitle>
         </CardHeader>
         <CardContent>
           producing intellectually well-equipped and socially committed citizens possessing an ethical value system.

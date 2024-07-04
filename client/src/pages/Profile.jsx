@@ -7,15 +7,18 @@ function Profile() {
   const [ bio, setBio ] = useState()
 
   useEffect( () => {
+    const controller = new AbortController()
+    const signal = controller.signal
     const fetchData = async () => {
       try{
-        const res = await axiosPrivate.get(`http://localhost:8080/users/bio`)
+        const res = await axiosPrivate.get(`http://localhost:8080/users/bio`, { signal })
         setBio( res.data ) 
       }catch( err ){
         console.log( err )
       }
     }
     fetchData()
+    return () => controller.abort()
   },[])
 
   return (

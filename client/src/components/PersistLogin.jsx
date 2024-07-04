@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthProvider"
 const PersistLogin = () => {
     const { persist } = useContext( AuthContext )
     const { auth } = useAuth()
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
     const refresh = useRefreshToken()
     
     useEffect( () => {
@@ -23,7 +23,7 @@ const PersistLogin = () => {
             }
         }
         
-        !auth?.token && persist
+        !auth?.accessToken && persist
             ? verifyRefreshToken()
             : setLoading(false)
     }, [])

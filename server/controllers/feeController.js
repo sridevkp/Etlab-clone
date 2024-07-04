@@ -6,6 +6,7 @@ const db =  mongoose.createConnection('mongodb://localhost:27017/etlabs')
 
 const { userModel: Users } = require("../models/User")
 const { feeModel: Fees } = require("../models/Fee")
+const { stdout } = require("process")
 
 const razor = new RazorPay({
     key_id: process.env.KEY_ID,
@@ -27,6 +28,7 @@ const createOrder = async ( req, res ) => {
                 console.log(err)
                 return res.sendStatus(503)
             }
+            console.log(`Order created for fee ${id}`)
             res.status(200).json({ order })
         })
     }catch( err ){
@@ -63,13 +65,14 @@ const verifyPayment = async ( req, res ) => {
                 fee 
             })
             user.dues = user.dues.filter( due => due._id != fee_id )
+            console.log(`Payment verified ${razorpay_payment_id}`)
             return user.save()
         }
         return res.status(400).send("Invalid signature sent")
 
 
     }catch( err ){
-        console.log( err )
+        process.stdout( `Payment failed` , err)
         res.sendStatus(500)
     }
 }

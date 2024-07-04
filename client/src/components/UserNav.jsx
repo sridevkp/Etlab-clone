@@ -32,7 +32,7 @@ const UserNav = () => {
     <Drawer>
       <DrawerTrigger asChild>
         <Button variant="outline" className="flex items-center gap-x-2">
-          {auth.name}
+          {auth.user.name}
           <ChevronDownIcon className="opacity-40"/>
         </Button>
       </DrawerTrigger>
@@ -40,23 +40,23 @@ const UserNav = () => {
       <DrawerContent className="justify-center items-center">
 
         <DrawerHeader className="max-w-md w-full">
-          <DrawerTitle>{auth.name}</DrawerTitle>
-          <DrawerDescription>{auth.role}</DrawerDescription>
+          <DrawerTitle>{auth.user.name}</DrawerTitle>
+          <DrawerDescription>{auth.user.role}</DrawerDescription>
         </DrawerHeader>
 
         <DrawerFooter className="max-w-md w-full">
           <div className="w-full flex justify-center">
-            <img src={defaultProfile} className="rounded-lg w-full"/>
+            <img src={ auth.user.picture || defaultProfile} className="rounded-lg w-full"/>
           </div>
           <div className="flex gap-2">
-            <Link to={`/${auth.role}/profile`} className="w-full">
+            <Link to={`/${auth.user.role}/profile`} className="w-full">
               <Button variant="outline" className="w-full gap-3">
                   <IdCardIcon/>
                   Profile
               </Button>
             </Link>
 
-            <Link to={`/${auth.role}/inbox`} className="w-full">
+            <Link to={`/${auth.user.role}/inbox`} className="w-full">
               <Button variant="outline" className="w-full gap-3">
                 <EnvelopeClosedIcon/>
                 Inbox
