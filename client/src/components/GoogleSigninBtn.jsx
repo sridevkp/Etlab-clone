@@ -1,25 +1,13 @@
 import { useEffect, useRef } from "react";
-import authConfig from "../../oauth.config.json"
+// import authConfig from "../../oauth.config.json"
 import useAuth from "../hooks/useAuth";
 
-const GoogleSigninBtn = ({ handleCallbackResponse }) => {
-  const { setAuth } = useAuth()
-  const btnRef = useRef()
-
-  useEffect( () => {
-    /* global google */ 
-    google.accounts.id.initialize({
-        client_id : authConfig.web.client_id,
-        callback  : handleCallbackResponse
-    })
-    google.accounts.id.renderButton( 
-      btnRef.current,
-      { theme: "outline", size: "large" }
-    )
-  }, []) 
+const GoogleSigninBtn = ({ onClick }) => {
 
   return (
-    <div id="signin" ref={btnRef} ></div>
+    <button id="signin"  onClick={onClick} >
+      google signin
+    </button>
   );
 };
 

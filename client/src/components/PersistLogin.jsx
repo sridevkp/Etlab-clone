@@ -12,6 +12,7 @@ const PersistLogin = () => {
     
     useEffect( () => {
         const verifyRefreshToken = async () => {
+            console.log("Persisting...")
             setLoading(true)
             try{
                 await refresh()

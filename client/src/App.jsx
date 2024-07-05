@@ -5,6 +5,7 @@ import AdminLayout from './layout/AdminLayout';
 import StudentLayout from './layout/StudentLayout';
 import LandingLayout from "./layout/LandingLayout";
 
+import Refresh from './pages/Refresh';
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
 import Results from './pages/Results';
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <Routes location={location} key={location.pathname}>
+      <Route path='/refresh' element={<Refresh/>} />
       <Route path='/' element={<LandingLayout/>} >
           <Route index element={<HomeNavigator/>} />
           <Route path='login' element={<Login/>} />

@@ -7,8 +7,10 @@ router.route("/")
     .post(   authController.handleLogin  )
     .delete( authController.handleLogout )
 
-router.post("/google", authController.handleGoogleLogin )
+router.get("/google"  , authController.generateOAuthUrl )
 
-router.get("/refresh", authController.refreshToken )
+router.get("/google/cb", authController.handleOAuthCallback )
+
+router.get("/refresh"  , authController.refreshToken )
 
 module.exports = router

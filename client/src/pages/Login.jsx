@@ -67,18 +67,10 @@ function Login() {
 
   }
   
-  const handleCallbackResponse = async response => {
-    const token = response.credential
-
+  const oauthRedirect = async () => {
     try{
-      const response = await axios.post("/auth/google", 
-        JSON.stringify({token}),
-        {
-          headers : { "Content-Type": "application/json" },
-        })
-      // const data = jwtDecode(token)
-      // setAuth(data)
-      console.log(response)
+      const response = await axios.get("/auth/google", { withCredentials: true })
+      window.location.href =  response.data.redirect 
     }catch( err ){
       toast( { title: "Login failed", description: err.message, variant: "destructive" })
     }
@@ -121,7 +113,7 @@ function Login() {
         <Separator className="my-5 mx-3 w-auto"/>
         
         <div className="flex justify-center">
-          <GoogleSigninBtn handleCallbackResponse={handleCallbackResponse}/>
+          <GoogleSigninBtn onClick={oauthRedirect}/>
         </div>
 
       </div>
